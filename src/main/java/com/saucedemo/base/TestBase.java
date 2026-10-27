@@ -1,0 +1,40 @@
+package com.saucedemo.base;
+
+import java.time.Duration;
+
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.testng.annotations.AfterMethod;
+import org.testng.annotations.BeforeMethod;
+
+import io.github.bonigarcia.wdm.WebDriverManager;
+
+public class TestBase 
+{
+	protected WebDriver driver;
+	
+	@BeforeMethod
+	public void setUp() 
+	{
+		// Automatically setup ChromeDriver using WebDriverManager
+        WebDriverManager.chromedriver().setup();
+        driver = new ChromeDriver();
+        
+        driver.manage().window().maximize();
+        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
+        
+     // Open the SauceDemo application URL
+        driver.get("https://www.saucedemo.com");
+        
+	}
+	
+	@AfterMethod
+    public void tearDown() 
+	{
+        if (driver != null) 
+        {
+            driver.quit();
+        }
+    }
+
+}
